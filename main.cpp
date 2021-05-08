@@ -224,28 +224,37 @@ void ejercicio_3(char* arreglo, char** matrix, int size, int filas, int columnas
 	cout<<sizeFr;
 	int banderaInicio=0;
 	for(int y=0; y<sizeFr; y++) {
-		if(banderaInicio!=0) {
+		if(banderaInicio!=0) {//dependiendo la letra se movera
 			if(arreglo[indice]=='U') {
-
-				inicioF++;
+				if(inicioF==filas-1) {
+					inicioF--;
+				} else {
+					inicioF++;
+				}
 
 			} else if(arreglo[indice]=='D') {
-
-				inicioF--;
-
+				if(inicioF==filas-1) {
+					inicioF++;
+				} else {
+					inicioF--;
+				}
 			} else if(arreglo[indice]=='R') {
-
-				inicioC++;
-
-			} else  if(arreglo[indice]=='L'){
-
-				inicioC--;
-
+				if(inicioC==columnas-1) {
+					inicioC--;
+				} else {
+					inicioC++;
+				}
+			} else  if(arreglo[indice]=='L') {
+				if(inicioC==columnas-1) {
+					inicioC++;
+				} else {
+					inicioC--;
+				}
 			}
 		}
 		for(int i=0; i<filas; i++) {
 			for(int j=0; j<columnas; j++) {
-				if(banderaInicio==0) {
+				if(banderaInicio==0) {//para poner el primer movimiento
 					if(i==inicioF&&j==inicioC) {
 						matrix[i][j]=UPDL(arreglo[indice]);
 						banderaInicio=1;
