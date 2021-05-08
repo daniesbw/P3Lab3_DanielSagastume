@@ -5,6 +5,10 @@ using namespace std;
 int menu();
 using std::string;
 
+int sizeFr=0;
+
+int sizeArray(char*, int);
+
 char UPDL(char );
 
 char* charArray(char*, int);
@@ -50,6 +54,16 @@ int main(int argc, char** argv) {
 			}//Fin del caso 2
 
 			case 3: {
+
+				int filas=0,columnas=0,obstaculos=0;
+				cout<<"Ingrese la cantidad de filas: ";
+				cin>>filas;
+				cout<<"Ingrese la cantidad de columnas: ";
+				cin>>columnas;
+				cout<<"Ingrese la cantidad de obstaculos: ";
+				cin>>obstaculos;
+				char** matrix = matrizObstaculo(filas, columnas, obstaculos);
+
 				int size=0;
 				cout<<"Ingrese el size de la palabra: ";
 				cin>>size;
@@ -60,14 +74,6 @@ int main(int argc, char** argv) {
 				}
 				char* arreglo=new char[size];
 				arreglo = charArray(arreglo, size);
-				int filas=0,columnas=0,obstaculos=0;
-				cout<<"Ingrese la cantidad de filas: ";
-				cin>>filas;
-				cout<<"Ingrese la cantidad de columnas: ";
-				cin>>columnas;
-				cout<<"Ingrese la cantidad de obstaculos: ";
-				cin>>obstaculos;
-				char** matrix = matrizObstaculo(filas, columnas, obstaculos);
 				ejercicio_3(arreglo, matrix, size, filas, columnas);
 				delete[] arreglo;
 				break;
@@ -119,6 +125,7 @@ char* charArray(char* array, int size) {
 			num="";
 		}
 	}
+	sizeFr= sizeArrayFinal;
 	char* arrayFinal=new char[sizeArrayFinal];
 	for(int p=0; p<sizeArrayFinal; p++) { //convertir la palabra  a char array
 		arrayFinal[p]=palabra[p];
@@ -156,8 +163,8 @@ char** matrizObstaculo(int filas, int columnas, int obstaculos) {
 		int filaObstaculo = (rand()%filas);//Sacar en que fila estara el obstaculo
 		int columnaObstaculo= (rand()%columnas);//Sacar en que columna estara el obstaculo
 		while(matrix[filaObstaculo][columnaObstaculo]=='#') {
-			filaObstaculo = (rand()%filas)+1;//Sacar en que fila estara el obstaculo
-			columnaObstaculo= (rand()%columnas)+1;//Sacar en que columna estara el obstaculo
+			filaObstaculo = (rand()%filas);//Sacar en que fila estara el obstaculo
+			columnaObstaculo= (rand()%columnas);//Sacar en que columna estara el obstaculo
 		}
 		for(int u=0; u<filas; u++) {
 			for(int j=0; j<columnas; j++) {
@@ -214,33 +221,77 @@ void ejercicio_3(char* arreglo, char** matrix, int size, int filas, int columnas
 		cin>>inicioC;
 	}
 	int indice=0;
+	cout<<sizeFr;
 	int banderaInicio=0;
-	for(int i=0; i<filas; i++) {
-		for(int j=0; j<columnas; j++) {
-			if(banderaInicio==0) {
-				if(i==inicioF&&j==inicioC) {
-					matrix[i][j]=arreglo[indice];
-					banderaInicio=1;
-					indice++;
-					system ("PAUSE");
-					system ("CLS");
-					imprimirMatriz(matrix, filas, columnas);
+	for(int y=0; y<sizeFr; y++) {
+		if(banderaInicio!=0) {
+			if(arreglo[indice]=='U') {
+				if(inicioF<filas){
+					inicioF++;
+				}
+			} else if(arreglo[indice]=='D') {
+				if(inicioF<filas){
+					inicioF--;
+				}
+			} else if(arreglo[indice]=='R') {
+				if(inicioC<columnas){
+					inicioF++;
 				}
 			} else {
-				system ("PAUSE");
-				system ("CLS");
-				imprimirMatriz(matrix, filas, columnas);
+				if(inicioC<columnas){
+					inicioF--;
+				}
 			}
 		}
+		for(int i=0; i<filas; i++) {
+			for(int j=0; j<columnas; j++) {
+				if(banderaInicio==0) {
+					if(i==inicioF&&j==inicioC) {
+						matrix[i][j]=UPDL(arreglo[indice]);
+						banderaInicio=1;
+						indice++;
+						system ("PAUSE");
+						system ("CLS");
+						imprimirMatriz(matrix, filas, columnas);
+					}
+				} else {
+					if(i==inicioF&&j==inicioC&&matrix[inicioF][inicioC]!='#') {
+						
+						system ("PAUSE");
+						system ("CLS");
+						matrix[i][j]=UPDL(arreglo[indice]);
+						imprimirMatriz(matrix, filas, columnas);
+						
+					}
+				}
+			}
+		}
+		indice++;
+	}
+	//LIBERAR MEMORIA
+	for(int i = 0; i<filas; i++) {
+		if(matrix[i]) {
+			delete[] matrix[i];
+			matrix[i] = 0; //asignar null
+		}
+	}
+
+	if( matrix != NULL ) {
+		delete[] matrix;
+		matrix = 0;
 	}
 }//Fin opcion 3
-char UPDL(char letra){
+
+char UPDL(char letra) {
 	char ret;
-	switch(letra){
-		
-	}//Fin del switch
+	if(letra=='D'||letra=='U') {
+		ret=186;
+	} else {
+		ret=205;
+	}
 	return ret;
 }
+
 
 
 
