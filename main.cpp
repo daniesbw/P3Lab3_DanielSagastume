@@ -202,7 +202,7 @@ void imprimirMatriz(char** matrix, int filas, int columnas) {
 
 void ejercicio_3(char* arreglo, char** matrix, int size, int filas, int columnas) {
 	int inicioF=0, inicioC=0;
-	cout<<"Ingrese en que fila va a iniciar: ";
+	cout<<"\nIngrese en que fila va a iniciar: ";
 	cin>>inicioF;
 	cout<<"Ingrese en que columna va a iniciar: ";
 	cin>>inicioC;
@@ -226,21 +226,21 @@ void ejercicio_3(char* arreglo, char** matrix, int size, int filas, int columnas
 	for(int y=0; y<sizeFr; y++) {
 		if(banderaInicio!=0) {
 			if(arreglo[indice]=='U') {
-				if(inicioF<filas){
-					inicioF++;
-				}
+
+				inicioF++;
+
 			} else if(arreglo[indice]=='D') {
-				if(inicioF<filas){
-					inicioF--;
-				}
+
+				inicioF--;
+
 			} else if(arreglo[indice]=='R') {
-				if(inicioC<columnas){
-					inicioF++;
-				}
-			} else {
-				if(inicioC<columnas){
-					inicioF--;
-				}
+
+				inicioC++;
+
+			} else  if(arreglo[indice]=='L'){
+
+				inicioC--;
+
 			}
 		}
 		for(int i=0; i<filas; i++) {
@@ -255,13 +255,13 @@ void ejercicio_3(char* arreglo, char** matrix, int size, int filas, int columnas
 						imprimirMatriz(matrix, filas, columnas);
 					}
 				} else {
-					if(i==inicioF&&j==inicioC&&matrix[inicioF][inicioC]!='#') {
-						
+					if(i==inicioF&&j==inicioC&&matrix[inicioF][inicioC]=='-') {
+
 						system ("PAUSE");
 						system ("CLS");
 						matrix[i][j]=UPDL(arreglo[indice]);
 						imprimirMatriz(matrix, filas, columnas);
-						
+
 					}
 				}
 			}
